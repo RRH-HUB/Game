@@ -22,10 +22,13 @@ public class HojaSprites {
 			imagen.getRGB(0, 0, ancho, ancho, pixeles, 0, ancho);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+	}
+
+	public int getAncho() {
+		return ancho;
 	}
 
 }

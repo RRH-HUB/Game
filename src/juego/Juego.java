@@ -6,6 +6,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import controls.Keyboard;
+
 /*creamos la ventana del juego
  * clase canvas para convertir la ventana en en una zona de dibujo 
  * añadimos un identificador por defecto de serio para en el futurio saber si hay modificaciones en la clase
@@ -17,9 +19,6 @@ import javax.swing.JFrame;
  */
 public class Juego extends Canvas implements Runnable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private final int ANCHO = 920;
@@ -34,6 +33,7 @@ public class Juego extends Canvas implements Runnable {
 
 	private static JFrame ventana;
 	private static Thread thread;
+	private static Keyboard keyboard;
 
 	private Juego() {
 		setPreferredSize(new Dimension(ANCHO, ALTO));
@@ -53,6 +53,10 @@ public class Juego extends Canvas implements Runnable {
 		ventana.setLocationRelativeTo(null);
 		// para que la ventana sea visible
 		ventana.setVisible(true);
+		// inicamos teclado
+		keyboard = new Keyboard();
+		addKeyListener(keyboard);
+
 	}
 
 	public static void main(String[] args) {
@@ -95,6 +99,8 @@ public class Juego extends Canvas implements Runnable {
 
 		double tiempoTranscurrido;
 		double delta = 0;// tiempo entre actualizaciones
+
+		requestFocus();
 		// mientras este encendido el bucle se ejecutara
 		while (encendido) {
 			// bloque del reloj de refresco de la pantalla
@@ -115,7 +121,7 @@ public class Juego extends Canvas implements Runnable {
 			mostrar();
 			// contador de aps y fps
 			if (System.nanoTime() - referenciaContador > NPS) {
-				ventana.setTitle(NOMBRE + " APS=" + aps2 + "FPS=" + fps);
+				ventana.setTitle(NOMBRE + " APS=" + aps2 + " FPS=" + fps);
 				aps2 = 0;
 				fps = 0;
 				referenciaContador = System.nanoTime();
@@ -125,6 +131,20 @@ public class Juego extends Canvas implements Runnable {
 	}
 
 	private void actualizar() {
+		keyboard.actualizar();
+
+		if (keyboard.down) {
+			System.out.println("abajo");
+		}
+		if (keyboard.left) {
+			System.out.println("izquierda");
+		}
+		if (keyboard.right) {
+			System.out.println("derecha");
+		}
+		if (keyboard.up) {
+			System.out.println("arriba");
+		}
 		aps2++;
 
 	}
