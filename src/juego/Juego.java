@@ -3,10 +3,15 @@ package juego;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
 import controls.Keyboard;
+import graphics.Screen;
 
 /*creamos la ventana del juego
  * clase canvas para convertir la ventana en en una zona de dibujo 
@@ -21,14 +26,26 @@ public class Juego extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final int ANCHO = 920;
-	private final int ALTO = 620;
+	private static final int ANCHO = 800;
+	private static final int ALTO = 800;
 	private final String NOMBRE = "Rol del Güeno";
 
 	private static int aps2 = 0;
 	private static int fps = 0;
 	// evita problemas al existir la posibilidad de que varios metodos usen esta
 	// variable
+	private static int x = 0;
+	private static int y = 0;
+	private static Screen pantalla;
+	/*
+	 * nos devuelve un array de int que son los pixeles de la imagen Raster nos
+	 * devuelve la secuencia de pixels y get databuffer nos devuekve la imagen en
+	 * tipo buffer que es lo que estamos usando y getdata accedemos a los datos, y
+	 * los convertimos a ints de data buffer
+	 */
+	private static BufferedImage image = new BufferedImage(ANCHO, ALTO, BufferedImage.TYPE_INT_RGB);
+	private static int[] pixeles = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
 	private static volatile boolean encendido = false;
 
 	private static JFrame ventana;
@@ -37,6 +54,8 @@ public class Juego extends Canvas implements Runnable {
 
 	private Juego() {
 		setPreferredSize(new Dimension(ANCHO, ALTO));
+
+		pantalla = new Screen(ANCHO, ALTO);
 
 		ventana = new JFrame(NOMBRE);
 		// cierra la ventana en la x y no quede ejen¡cutando el loop en segundo plano
@@ -132,24 +151,41 @@ public class Juego extends Canvas implements Runnable {
 
 	private void actualizar() {
 		keyboard.actualizar();
-
+//lo que se mueve es el mapa por debajo del personaje
 		if (keyboard.down) {
-			System.out.println("abajo");
+			y--;
 		}
 		if (keyboard.left) {
-			System.out.println("izquierda");
+			x++;
 		}
 		if (keyboard.right) {
-			System.out.println("derecha");
+			x--;
 		}
 		if (keyboard.up) {
-			System.out.println("arriba");
+			y++;
 		}
 		aps2++;
 
 	}
 
 	private void mostrar() {
+		BufferStrategy estrategia = getBufferStrategy();
+		if (estrategia == null) {
+			createBufferStrategy(3);// es un espacio en memoria enb el que se dibuja antes de mostrarlo con
+									// estrategia 3 tenmos 3 dibujos de "cola"
+			return;
+		}
+		pantalla.limpiar();
+		pantalla.draw(y, x);
+		System.arraycopy(pantalla.pixeles, 0, pixeles, 0, pixeles.length);
+		Graphics g = estrategia.getDrawGraphics();
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		g.dispose();
+		estrategia.show();
+
+//		for (int i = 0; i < pixeles.length; i++) {
+//			pixeles[i] = pantalla.pixeles[i];
+//		}
 		fps++;
 
 	}

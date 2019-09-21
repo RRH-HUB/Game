@@ -5,12 +5,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class HojaSprites {
+public class SpriteSheet {
 	private final int ancho;
 	private final int alto;
 	public final int[] pixeles;
 
-	public HojaSprites(final String ruta, final int ancho, final int alto) {
+	// ---------------------------------sprite sheet collection
+	public static SpriteSheet terrain_5 = new SpriteSheet("/textures/terrain_5.png", 320, 320);
+
+	public SpriteSheet(final String ruta, final int ancho, final int alto) {
 		this.ancho = ancho;
 		this.alto = alto;
 		pixeles = new int[ancho * alto];
@@ -18,7 +21,7 @@ public class HojaSprites {
 		// el array
 		BufferedImage imagen;
 		try {
-			imagen = ImageIO.read(HojaSprites.class.getResource(ruta));
+			imagen = ImageIO.read(SpriteSheet.class.getResource(ruta));
 			imagen.getRGB(0, 0, ancho, ancho, pixeles, 0, ancho);
 
 		} catch (IOException e) {

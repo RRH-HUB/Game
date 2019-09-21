@@ -7,9 +7,12 @@ public final class Sprite {
 	private int y;
 
 	public int[] pixeles;
-	private final HojaSprites hoja;
+	private final SpriteSheet hoja;
 
-	public Sprite(final int lado, final int columna, final int fila, final HojaSprites hoja) {
+	// -------------------------sprite collection
+	public static Sprite greenGrass = new Sprite(32, 0, 0, SpriteSheet.terrain_5);
+
+	public Sprite(final int lado, final int columna, final int fila, final SpriteSheet hoja) {
 		this.lado = lado;
 
 		pixeles = new int[this.lado * this.lado];
