@@ -42,7 +42,7 @@ public final class Screen {
 					continue;
 				}
 				// drawing a sprite 'greenGrass'
-				pixeles[posX + posY * ancho] = Sprite.greenGrass.pixeles[(x & MASCARA_SPRITE)
+				pixeles[posX + posY * ancho] = Sprite.water.pixeles[(x & MASCARA_SPRITE)
 						+ (y & MASCARA_SPRITE) * LADO_SPRITE];
 			}
 		}

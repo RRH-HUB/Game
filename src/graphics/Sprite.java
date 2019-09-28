@@ -11,6 +11,7 @@ public final class Sprite {
 
 	// -------------------------sprite collection
 	public static Sprite greenGrass = new Sprite(32, 0, 0, SpriteSheet.terrain_5);
+	public static Sprite water = new Sprite(32, 2, 0, SpriteSheet.terrain_5);
 
 	public Sprite(final int lado, final int columna, final int fila, final SpriteSheet hoja) {
 		this.lado = lado;

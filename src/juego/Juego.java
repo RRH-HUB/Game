@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import controls.Keyboard;
@@ -27,7 +28,7 @@ public class Juego extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	private static final int ANCHO = 800;
-	private static final int ALTO = 800;
+	private static final int ALTO = 600;
 	private final String NOMBRE = "Rol del Güeno";
 
 	private static int aps2 = 0;
@@ -52,6 +53,8 @@ public class Juego extends Canvas implements Runnable {
 	private static Thread thread;
 	private static Keyboard keyboard;
 
+	private static final ImageIcon icono = new ImageIcon(Juego.class.getResource("/icono/IconoFnatasma.png"));
+
 	private Juego() {
 		setPreferredSize(new Dimension(ANCHO, ALTO));
 
@@ -72,6 +75,7 @@ public class Juego extends Canvas implements Runnable {
 		ventana.setLocationRelativeTo(null);
 		// para que la ventana sea visible
 		ventana.setVisible(true);
+		ventana.setIconImage(icono.getImage());
 		// inicamos teclado
 		keyboard = new Keyboard();
 		addKeyListener(keyboard);
